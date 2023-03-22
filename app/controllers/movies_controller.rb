@@ -15,6 +15,8 @@ class MoviesController < ApplicationController
 
   def movie_params
     params.permit(:title, :year, :length, :director, :description, :poster_url, :category, :discount, :female_director)
+  rescue ActiveRecord::RecordInvalid => e
+    render json: { errors: e.record.errors.full_messages }, status: :unprocessable_entity
   end
   
 end
